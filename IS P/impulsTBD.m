@@ -1,0 +1,34 @@
+t=second2; 
+u=Volt; 
+y=Volt2; 
+
+plot(t,[u,y]);
+grid;
+legend('u','y');
+
+u0=mean(u(54));
+ust=mean(u(421:500));
+y0=mean(y(56));
+yst=mean(y(443:501));
+d=yst-y0;
+k=yst/ust;
+hold on;
+plot(t,(y0+0.63*d)*ones(size(t)),'--r');
+T=t(164)-t(56);
+H=tf(k,[T 1]);
+yf=lsim(H,u,t);
+hold on
+title('Conditii initiale 0');
+plot(t,yf);
+
+
+A=-1/T;
+B=k/T;
+C=1;
+D=0;
+yf1=lsim(A,B,C,D,u,t,y(1));
+figure
+title('Condiitii initiale !=0');
+plot(t,[u,y,yf1]);
+hold on;
+plot(t,yf1,'g');
