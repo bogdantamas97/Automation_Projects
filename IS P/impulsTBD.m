@@ -1,34 +1,61 @@
-t=second2; 
-u=Volt; 
-y=Volt2; 
-
-plot(t,[u,y]);
-grid;
-legend('u','y');
-
-u0=mean(u(54));
-ust=mean(u(421:500));
-y0=mean(y(56));
-yst=mean(y(443:501));
-d=yst-y0;
-k=yst/ust;
-hold on;
-plot(t,(y0+0.63*d)*ones(size(t)),'--r');
-T=t(164)-t(56);
-H=tf(k,[T 1]);
-yf=lsim(H,u,t);
-hold on
-title('Conditii initiale 0');
-plot(t,yf);
-
-
-A=-1/T;
-B=k/T;
-C=1;
+t=second1;
+u=Volt;
+y=Volt1;
+%yst si ust
+yst=mean(y(890:990))
+ust=mean(u(890:990))
+%Factorul de proportionalitate
+k=yst/ust
+%Suprareglajul
+A1=sum(y(623:694)-yst)*(t(2)-t(1));
+A2=sum(y(694:788)-yst)*(t(2)-t(1));
+sigma=-A2/A1
+%Factorul de amortizare
+tzita=-log(sigma)/sqrt(log(sigma)^2+pi^2)
+%Perioada de oscilatie
+tmax=t(538);
+t0=t(500);
+Tosc=2*(tmax-t0)
+%wn
+wn=pi/(Tosc*(sqrt(1-tita^2)))
+%Functia de transfer
+h=tf(k*wn^2,[1 2*tita*wn wn^2])
+%Spatiul starilor
+A=[0 1;-wn^2 -2*tita*wn];
+B=[0;k*wn^2];
+C=[1 0];
 D=0;
-yf1=lsim(A,B,C,D,u,t,y(1));
+sys=ss(A,B,C,D);
+yc=lsim(sys,u,t,[y(1);0]);
+% figure
+% plot(t,u,'b',t,y,'r',t,yc,'black');
+% xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
+% legend('semnal impuls','raspunsul la impuls dat','raspunsul la impuls calculat');
+% title('Sistem de ordin 2, raspuns la impuls');
+
+%Eroare medie patratica
+J=sqrt(1/1000*sum((y-yc).^2));
+%Eroare medie patratica normalizataS
+ym=mean(y);
+Empn=norm(y-yc)/norm(y-ym);
+% %Functia de transfer identificata la treapta
+wn_tr= 2.124459164537476e+04;
+tzita_tr= 0.231323396353585
+k_tr=1.068552991673386
+A_tr=[0 1; -wn_tr^2 -2*tzita_tr*wn_tr];
+B_tr=[0 ; k_tr*wn_tr^2];
+C_tr=[1 0];
+D_tr=0;
+sys_tr=ss(A_tr,B_tr,C_tr,D_tr);
 figure
-title('Condiitii initiale !=0');
-plot(t,[u,y,yf1]);
-hold on;
-plot(t,yf1,'g');
+yc_tr=lsim(A_tr,B_tr,C_tr,D_tr,u,t,[y(1) ;0]);
+plot(t,u,'b',t,yc_tr,'y',t,y,'r',t,yc,'black');
+legend('semnal impuls','model identificat cu H de la treapta ',' raspunsul sistemului ','model identificat cu H de la impuls');
+xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
+title('Sistem de ordin 2, raspuns la impuls');
+
+% eroare medie patratica la impus
+J_tr=sqrt(1/1000*(sum((y-yc_tr).^2)) )
+%eroare medie normalizata
+ym=mean(y);
+Empn_tr=norm(y-yc_tr)/norm(y-ym)

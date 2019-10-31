@@ -1,7 +1,7 @@
 
-t=scope294(:,1);
-u=scope294(:,2);
-y=scope294(:,3);
+t=second1; 
+u=Volt; 
+y=Volt1; 
 plot(t,[u,y]);
 grid;
 legend('u','y');
