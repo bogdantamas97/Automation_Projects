@@ -1,5 +1,6 @@
 % %% Amplificatorul
-% Permite controlul motorului care antreneaz? pompa.
+% Permite controlul motorului care antreneaza pompa.
+
 A = 332.5;
 k = 0.035;
 k1 = 0.6541;
@@ -7,17 +8,17 @@ k2 = -0.015;
 k3 = -0.0006;
 C = 9;
 
-keta =  8*10^(-5)
+keta =  8*10^(-5);
 
 k11 = k2^2 + 4*(k-k3)*k1
 k12 = 8*(k-k3)
 k13 = 2*(k - k3)
 
-Ua = 0:0.1:10;
-Um=UmUaFunction(Ua);
+% Ua = 0:0.1:10;
+% Um=UmUaFunction(Ua);
 
 % %% Motorul
-% Motor de curent continuu cu magne?i permanen?i antreneaza pompa
+% Motor de curent continuu cu magneti permanenti antreneaza pompa
 
 % Rm = 3;
 % Im = Um/Rm;
@@ -26,8 +27,6 @@ Um=UmUaFunction(Ua);
 
 % n = (um - Rm*Im)/km;
 % em = km*n
-
-
 
 % %% Pompa
 % Sarcina, randament debit

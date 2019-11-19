@@ -11,8 +11,9 @@ import java.util.Date;
  * @author Radu Miron
  * @since 15.10.2019
  */
-@Entity
+
 @Data
+@Entity
 public class Position {
 
     @Id

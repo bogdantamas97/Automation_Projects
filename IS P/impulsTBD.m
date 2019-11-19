@@ -1,15 +1,15 @@
 t=second1;
 u=Volt;
 y=Volt1;
-% plot(t,[u,y yst*ones(size(t))]);
-% grid
-% xlabel('t(secunde)');ylabel('u y [V]');
-% legend('semnal impuls','raspuns');
-% title('Raspuns la impuls, sistem de ordin 2');
+plot(t,[u,y yst*ones(size(t))]);
+grid
+xlabel('t(secunde)');ylabel('u y [V]');
+legend('semnal impuls','raspuns');
+title('Raspuns la impuls, sistem de ordin 2');
  
 %Regim stationar 
-ust=mean(u(882:982))
-yst=mean(y(882:982)) 
+ust=mean(u(884:984))
+yst=mean(y(884:984)) 
  
 %Factorul de proportionalitate
 k=yst/ust
@@ -40,10 +40,10 @@ C=[1 0];
 D=0;
 sys=ss(A,B,C,D);
 yc=lsim(sys,u,t,[y(1);0]);
-plot(t,u,'b',t,y,'r',t,yc,'green');
-xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
-legend('semnal impuls','raspuns impuls','raspuns impuls S');
-title('Sistem de ordin 2, raspuns impuls');
+% plot(t,u,'b',t,y,'r',t,yc,'green');
+% xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
+% legend('semnal impuls','raspuns impuls','raspuns impuls S');
+% title('Sistem de ordin 2, raspuns impuls');
  
 %Eroare medie patratica
 J=sqrt(1/1000*sum((y-yc).^2));

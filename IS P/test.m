@@ -32,3 +32,8 @@ title('Condiitii initiale !=0');
 plot(t,[u,y,yf1]);
 hold on;
 plot(t,yf1,'g');
+
+J=sqrt(1/1000*sum((y-yf1).^2));
+eroare medie normalizata 
+ym=mean(y);
+Empn=norm(y-yf1)/norm(y-ym);
