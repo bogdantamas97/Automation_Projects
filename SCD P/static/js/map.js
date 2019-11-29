@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var map;
+var markers = [];
 var myLatLng = {lat: 46.7693924, lng: 23.5902006};
 
 function initialize() {
@@ -20,12 +21,14 @@ function initialize() {
 }
 
 function addStaticMarker() {
-    var pos = getRandomPosition()
+    var pos = getRandomPosition();
     var marker = new google.maps.Marker({
         position: pos,
         map: map,
-        title: 'Hello World!'
+        title: 'A static marker!'
     });
+    console.log(document.getElementsByClassName("result"));
+    markers.push(pos);
 }
 
 function getRandomPosition(){
