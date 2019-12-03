@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: radu.miron
- * Date: 12/2/19
- * Time: 10:45 AM
- * To change this template use File | Settings | File Templates.
- */
 function getPositions() {
     var criteria = new Criteria();
     sendRequest("GET", "position?" + $.param(criteria), null, getPositionsSuccessHandler, getPositionsErrorHandler);

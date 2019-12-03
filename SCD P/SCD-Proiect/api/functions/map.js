@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: radu.miron
- * Date: 12/2/19
- * Time: 3:01 PM
- * To change this template use File | Settings | File Templates.
- */
 var map;
 var markers = [];
 var myLatLng = {lat: 46.0112777, lng: 24.8382907};

@@ -1,11 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: radu.miron
- * Date: 12/2/19
- * Time: 3:01 PM
- * To change this template use File | Settings | File Templates.
- */
-
 function sendRequest (type, resource, data, successHandler, errHandler) {
     jQuery.ajax({
         type: type,
