@@ -1,6 +1,8 @@
 import React from "react";
 import { getPositions } from '../utils/GetPositions';
-import {AppBar, TextField, Button,Typography, Toolbar, makeStyles} from '@material-ui/core';
+import { AppBar, TextField, makeStyles } from '@material-ui/core';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -27,30 +29,24 @@ export const DeviceIdPage = () => {
     const [text1,setText1] = React.useState("2015-01-01 23:00:00");
     const [text2,setText2] = React.useState("2018-01-02 23:00:00");
 
-
     return (
         <div>
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                <Typography variant="h6" className={classes.title}>
-                    Device ID
-                </Typography>
-                </Toolbar>
-            </AppBar>
-        </div>
-            <TextField className={classes.textField} label="Start Date" defaultValue={text1} onChange={setText1}>{text1}</TextField>
-            <TextField className={classes.textField} label="End Date" defaultValue={text2} onChange={setText2}>{text2}</TextField>
+        <MuiThemeProvider key={"theme"}>
 
-            <Button variant="contained" color="primary" onClick={getPositions}>
-                Get Positions
-            </Button>
-            <Button variant="contained" color="primary" onClick={getPositions}>
-                Show on Map
-            </Button>
+            <TextField className={classes.textField} label="Start Date" style={style} defaultValue={text1} onChange={setText1}>{text1}</TextField>
+            <TextField className={classes.textField} label="End Date" style={style} defaultValue={text2} onChange={setText2}>{text2}/></TextField>
+
+            <RaisedButton label="Get Positions" primary={true} style={style}  onClick={getPositions}/>
+            <RaisedButton label="Show on Map" primary={true} style={style} onClick={getPositions}/>
+            
+        </MuiThemeProvider>   
         </div>
-       
-    )
+        
+    );
 }
+
+const style = {
+    margin: 30,
+};
 
 export default DeviceIdPage;

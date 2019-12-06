@@ -3,51 +3,21 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import {Route} from "react-router-dom";
 
 import axios from 'axios';
 
-var apiBaseUrl = "http://localhost:4000/api/";
-class Login extends Component {
-  constructor(props){
-    super(props);
-    var localloginComponent=[];
-    localloginComponent.push(
-      <MuiThemeProvider key={"theme"}>
-        <div>
-         <TextField
-           hintText="Enter your College Rollno"
-           floatingLabelText="Student Id"
-           onChange={(newValue) => this.setState({username:newValue})}
-           />
-         <br/>
-           <TextField
-             type="password"
-             hintText="Enter your Password"
-             floatingLabelText="Password"
-             onChange = {(newValue) => this.setState({password:newValue})}
-             />
-           <br/>
-           <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-       </div>
-       </MuiThemeProvider>
-    )
-    this.state={
-      username:'',
-      password:'',
-      loginComponent:localloginComponent,
-    }
-  }
-  componentWillMount(){
-  // console.log("willmount prop values",this.props);
+const apiBaseUrl = "http://localhost:3000/api/";
+
+const LoginForm = () => {
+
+  const [username,setUsername] = React.useState('');
+  const [password,setPassword] = React.useState('');
     
-  
-  }
-  handleClick(event){
-    var payload={
-      "userid":this.state.username,
-	    "password":this.state.password,
+  const handleClick = (event) => {
+    const payload={
+      "userid":username,
+	    "password":password,
     }
     axios.post(apiBaseUrl+'login', payload)
    .then(function (response) {
@@ -67,26 +37,43 @@ class Login extends Component {
    });
   
   }
-  render() {
-    return (
+
+  return (
       <div>
         <MuiThemeProvider>
         <AppBar
              title="Login"
-           />
+         />
         </MuiThemeProvider>
         <MuiThemeProvider>
         <div>
         </div>
         </MuiThemeProvider>
-        {this.state.loginComponent}
-      </div>
-    );
-  }
+        <MuiThemeProvider key={"theme"}>
+      <div>
+      <TextField
+        hintText="Enter your Username"
+        floatingLabelText="Username"
+        onChange={(value) => setPassword(value)}
+        />
+      <br/>
+        <TextField
+          type="password"
+          hintText="Enter your Password"
+          floatingLabelText="Password"
+          onChange = {(value) => setUsername(value)}
+          />
+        <br/>
+        <Route render={({history}) => <RaisedButton label="Register" primary={true} style={style} onClick={() => history.push("/register")}/>}/>
+        <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => handleClick(event)}/>
+     </div>
+      </MuiThemeProvider>
+    </div>
+        );
 }
 
 const style = {
   margin: 15,
 };
 
-export default Login;
+export default LoginForm;
