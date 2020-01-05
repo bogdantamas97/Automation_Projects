@@ -2,8 +2,10 @@
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "jquery": "^3.4.1",
+    "js-cookie": "^2.2.1",
     "material-ui": "^0.20.2",
     "prettier": "^1.19.1",
+    "react-cookie": "^4.0.3",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {

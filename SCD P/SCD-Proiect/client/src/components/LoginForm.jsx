@@ -1,48 +1,45 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import Link from '@material-ui/core/Link';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {Route} from "react-router-dom";
+
+import Cookie from 'js-cookie';
+import { Route } from "react-router-dom";
 
 import axios from 'axios';
 
-const apiBaseUrl = "http://localhost:3000/api/";
+const apiBaseUrl = "http://localhost:8000";
 
 const LoginForm = () => {
 
-  const [username,setUsername] = React.useState('');
-  const [password,setPassword] = React.useState('');
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+
+  const [isLoggedIn, setLoggedIn] = useState(Cookie.get("token") !== undefined);
     
-  const handleClick = (event) => {
-    const payload={
-      "userid":username,
-	    "password":password,
-    }
-    axios.post(apiBaseUrl+'login', payload)
-   .then(function (response) {
-     console.log(response)
-     
-     if(response.data.code === 204){
-       console.log("Username password do not match");
-       alert(response.data.success)
-     }
-     else{
-       console.log("Username does not exists");
-       alert("Username does not exist");
-     }
+  const handleClick = () => {
+    axios.get(apiBaseUrl)
+   .then((response)=> {
+    if(response.data.filter((user)=> user.email === email)[0])
+      if(response.data.filter((user)=> user.password === password)[0]){
+        Cookie.set("token", response.data.filter((user)=> user.password === password)[0].id);
+        setLoggedIn(true);
+      } 
+      else alert("Wrong password!");
+    else alert("Username doesn't exist!");
    })
-   .catch(function (error) {
-     console.log(error);
+   .catch(() => {
+     console.log('Unknown error');
    });
-  
   }
 
   return (
       <div>
         <MuiThemeProvider>
         <AppBar
-             title="Login"
+             title="GPS APP"
          />
         </MuiThemeProvider>
         <MuiThemeProvider>
@@ -52,20 +49,29 @@ const LoginForm = () => {
         <MuiThemeProvider key={"theme"}>
       <div>
       <TextField
-        hintText="Enter your Username"
-        floatingLabelText="Username"
-        onChange={(value) => setPassword(value)}
+        hintText="Enter your email"
+        floatingLabelText="Email"
+        required
+        onChange = {(event) => setEmail(event.target.value)}
         />
       <br/>
         <TextField
-          type="password"
-          hintText="Enter your Password"
-          floatingLabelText="Password"
-          onChange = {(value) => setUsername(value)}
+        type="password"
+        hintText="Enter your Password"
+        floatingLabelText="Password"
+        required
+        onChange={(event) => setPassword(event.target.value)}
           />
         <br/>
-        <Route render={({history}) => <RaisedButton label="Register" primary={true} style={style} onClick={() => history.push("/register")}/>}/>
-        <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => handleClick(event)}/>
+        <RaisedButton label="Login" primary={true} style={style} onClick={(event) => handleClick(event)}/>
+        <Route render={({history}) => {
+        isLoggedIn && history.push("/device") 
+        return (
+          <Link href="" onClick={() => history.push("/register")}>
+            Don't have an account?Sign up.
+          </Link>
+        )}}/>
+        
      </div>
       </MuiThemeProvider>
     </div>

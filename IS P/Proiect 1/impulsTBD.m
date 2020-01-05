@@ -1,7 +1,7 @@
 t=second1;
 u=Volt;
 y=Volt1;
-plot(t,[u,y yst*ones(size(t))]);
+plot(t, [u y]);
 grid
 xlabel('t(secunde)');ylabel('u y [V]');
 legend('semnal impuls','raspuns');
@@ -40,10 +40,10 @@ C=[1 0];
 D=0;
 sys=ss(A,B,C,D);
 yc=lsim(sys,u,t,[y(1);0]);
-% plot(t,u,'b',t,y,'r',t,yc,'green');
-% xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
-% legend('semnal impuls','raspuns impuls','raspuns impuls S');
-% title('Sistem de ordin 2, raspuns impuls');
+plot(t,u,'b',t,y,'r',t,yc,'green');
+xlabel('t(secunde)');ylabel('u[ V ] y [ V ] ');
+legend('semnal impuls','raspuns impuls','raspuns impuls S');
+title('Sistem de ordin 2, raspuns impuls');
  
 %Eroare medie patratica
 J=sqrt(1/1000*sum((y-yc).^2));

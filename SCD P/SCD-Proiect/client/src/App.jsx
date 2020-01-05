@@ -1,12 +1,9 @@
 import React from "react";
-import DeviceIdPage from "./components/DeviceIdPage";
-import LoginForm from "./components/LoginForm";
-import RoutesHandler from "./handlers/RoutesHandler";
+import AppHandler from "./handlers/AppHandler";
 export const App = () => {
     return (
         <div>
-       <DeviceIdPage/>
-       {/* <RoutesHandler/> */}
+       <AppHandler/>
        </div>
     )
 }
